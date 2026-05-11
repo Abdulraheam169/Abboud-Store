@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter , Routes , Route  } from "react-router";
+import { HashRouter , Routes , Route  } from "react-router";
 import PageLayout from "./PageLayout";
 import Home from "./pages/Home";
 import About from "./pages/About";
@@ -42,7 +42,7 @@ function removeItem(e){
 }
 
   return <>
-  <BrowserRouter basename="/Abboud-Store/">
+  <HashRouter >
     <Routes>
       <Route  path='/' element={<PageLayout />}>
         <Route index element={<Home />} />
@@ -52,7 +52,7 @@ function removeItem(e){
         <Route path='products/:id' element={<Product products={products} add={addToCard} remove={removeItem} onChange={handleQuantity}  />} />
       </Route>
     </Routes>
-  </BrowserRouter>
+  </HashRouter>
 
   </>
 

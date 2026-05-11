@@ -29,7 +29,7 @@ nav {
 }
 .my-link {
   font-weight: bold;
-  text-decoration: underline;
+  color: white;
 }
 .cat {
   margin: 30px auto 10px;
