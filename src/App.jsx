@@ -42,7 +42,7 @@ function removeItem(e){
 }
 
   return <>
-  <BrowserRouter basename="/Abboud-Store">
+  <BrowserRouter basename="/Abboud-Store/">
     <Routes>
       <Route  path='/' element={<PageLayout />}>
         <Route index element={<Home />} />
