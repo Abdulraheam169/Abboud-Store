@@ -16,7 +16,7 @@ export default function MyCard(props){
                             onChange={props.onChange} 
                             defaultValue={product.totalPrice ?  product.totalPrice / product.newPrice : 1}  min={1} type="number" name="count" id="count" />
                             {product.totalPrice ? <div>{product.totalPrice}</div> : undefined }
-                            <button id={product.id} onClick={props.remove}>"Remove From The Card"</button>
+                            <button id={product.id} onClick={props.remove}>Remove</button>
                 
                         </div>)
                         })
