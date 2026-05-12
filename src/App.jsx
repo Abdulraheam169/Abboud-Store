@@ -38,7 +38,7 @@ function addToCard(e){
 }
 function removeItem(e){
     let productId = e.currentTarget.id;
-    setProducts((prev) => prev.map(pro => pro.id == productId ? {...pro, "isAdded": false} : pro))
+    setProducts((prev) => prev.map(pro => pro.id == productId ? {...pro, "isAdded": false , "totalPrice" : pro.newPrice} : pro))
 }
 
   return <>

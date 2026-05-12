@@ -18,13 +18,15 @@ export default function ProductPage(props){
                 <div className="d-descrition">Description: {pro.description}</div>
                 <div className="d-category">Category: {pro.category}</div>
                { pro.isAdded ? <>
-                <button id={pro.id} onClick={props.remove}>"Remove From The Card"</button>
+                <button id={pro.id} onClick={props.remove}>Remove From The Card</button>
                 <input 
                onChange={props.onChange} 
                defaultValue={pro.totalPrice ?  pro.totalPrice / pro.newPrice : 1}  min={1} type="number" name="count" id="count" />
+               <div className="total">{pro.totalPrice ? pro.totalPrice : pro.newPrice}</div>
                </>
                 :
-                <button id={pro.id} onClick={props.add}>"Add To The Card"</button> }
+                pro.isAvailable ? <button id={pro.id} onClick={props.add}>Add To The Card</button> : undefined
+               }
             
             </div>
         }
