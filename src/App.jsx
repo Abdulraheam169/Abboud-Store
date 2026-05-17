@@ -32,9 +32,9 @@ function handleQuantity(e){
   const val = parseInt(e.currentTarget.value)
   setProducts(prev => prev.map(item => item.id == id ? {...item, totalPrice : base * val } : {...item}))
 }
-function addToCard(e){
+function toggleAdded(e){
     let productId = e.currentTarget.id;
-    setProducts((prev) => prev.map(pro => pro.id == productId ? {...pro, "isAdded": true} : pro))
+    setProducts((prev) => prev.map(pro => pro.id == productId ? {...pro, "isAdded": !pro.isAdded} : pro))
 }
 function removeItem(e){
     let productId = e.currentTarget.id;
@@ -47,9 +47,9 @@ function removeItem(e){
       <Route  path='/' element={<PageLayout />}>
         <Route index element={<Home />} />
         <Route path="aboutUs" element={<About />} /> 
-        <Route path="myCard" element={<MyCard items={products.filter(item => item.isAdded)} onChange={handleQuantity} remove={removeItem}  />} /> 
-        <Route path="products" element={<Products products={products} categories={categories} add={addToCard} remove={removeItem} />} />
-        <Route path='products/:id' element={<Product products={products} add={addToCard} remove={removeItem} onChange={handleQuantity}  />} />
+        <Route path="myCard" element={<MyCard items={products.filter(item => item.isAdded)} onChange={handleQuantity} remove={toggleAdded}  />} /> 
+        <Route path="products" element={<Products products={products} categories={categories}  toggle={toggleAdded} />} />
+        <Route path='products/:id' element={<Product products={products} togge={toggleAdded} onChange={handleQuantity}  />} />
       </Route>
     </Routes>
   </HashRouter>

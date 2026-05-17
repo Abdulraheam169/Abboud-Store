@@ -1,9 +1,11 @@
 * {
   box-sizing: border-box;
 }
+
 body {
   background-color: #f8f9fa;
 }
+
 #root {
   color: #0d1b2e;
   width: 90%;
@@ -13,11 +15,13 @@ body {
   justify-content: center;
   align-items: center;
 }
+
 @media (max-width: 766px) {
   #root {
     width: 100%;
   }
 }
+
 nav {
   width: 100%;
   display: flex;
@@ -26,19 +30,29 @@ nav {
   background-color: #1b263b;
   height: 50px;
   border-radius: 10px;
+
   a {
     color: #e0e1dd;
     text-decoration: none;
     font-size: 20px;
   }
 }
+
 .my-link {
   font-weight: bold;
   color: #ffffff;
 }
+
 .cat {
+  width: 100%;
   margin: 30px auto 10px;
+  display: grid;
+  align-items: center;
+  align-items: center;
+  grid-template-columns: auto auto auto auto;
+  column-gap: 15px;
 }
+
 .cat button {
   background-color: #e0e1dd;
   border: none;
@@ -47,17 +61,82 @@ nav {
   padding: 5px;
   transition: 0.5s;
 }
+
 .cat button:hover,
 .chosen-cat {
   /* background-color: rgba(255, 0, 0, 0.459); */
+}
+
+.search-bar {
+  background-color: #415a77;
+  height: 50px;
+  border-radius: 15px;
+  width: 100%;
+  margin: 30px 0 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  #searchName {
+    width: 400px;
+    height: 30px;
+    border-radius: 9px;
+    border: none;
+    font-size: 15px;
+  }
+
+  #price {
+    color: #1b263b;
+    width: 100px;
+    height: 30px;
+    background-color: white;
+    border-radius: 10px;
+  }
+  button {
+    background-color: white;
+    border: none;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    padding: 1px;
+  }
+}
+@media (max-width: 766px) {
+  .search-bar {
+    #searchName {
+      width: 200px;
+      height: 30px;
+    }
+
+    #price {
+      width: 100px;
+      height: 30px;
+    }
+    button {
+      background-color: white;
+      border: none;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      padding: 1px;
+    }
+  }
+}
+.reset-search:first-child {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  color: #1b263b;
 }
 .p-cont {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;
 }
+
 .available {
 }
+
 .not-available::after {
   content: "Not Available";
   position: absolute;
@@ -71,6 +150,7 @@ nav {
   transform: rotate(-45deg);
   /* color: white; */
 }
+
 .product-card {
   overflow: hidden;
   position: relative;
@@ -86,13 +166,17 @@ nav {
   font-size: 13px;
   /* box-shadow: -5px 1px 8px 3px #f44336; */
   margin: 5px;
+
   button {
     border-radius: 5px;
     background-color: #ffffff9e;
     width: 40px;
     order: 5;
     height: 35px;
+    color: #1b263b;
+    border: 2px solid #1b263b;
   }
+
   .det {
     order: 6;
     margin-top: 5px;
@@ -104,11 +188,13 @@ nav {
     text-align: center;
   }
 }
+
 .p-title {
   order: 2;
   font-size: 14px;
   font-weight: bold;
 }
+
 .price {
   order: 3;
   width: 100%;
@@ -116,17 +202,21 @@ nav {
   align-items: center;
   justify-content: flex-start;
 }
+
 .p-old-price {
   font-size: 12px;
   text-decoration: line-through;
 }
+
 .p-price {
   font-size: 18px;
 }
+
 .p-category {
   order: 5;
   width: 50%;
 }
+
 .p-img {
   order: 1;
   background-size: cover;
@@ -135,65 +225,17 @@ nav {
   transition: 0.5s;
   border-radius: 10px;
 }
+
 .img {
   background-color: white;
   overflow: hidden;
 }
+
 .p-img:hover {
   /* transform: rotate(2deg); */
   transform: matrix(1, -1, 1, 1, 0, 0);
 }
 
-.add,
-.remove {
-  position: relative;
-  width: 50px;
-  color: #1b263b;
-  border: 1px solid #1b263b;
-}
-.add::before,
-.remove::before,
-.remove::after,
-.add::after {
-  transition: 0.5s;
-  content: "";
-  position: absolute;
-  border-radius: 5px;
-}
-.add::before {
-  background-color: #1b263b;
-  width: 20px;
-  height: 4px;
-  top: 50%;
-  left: 50%;
-  transform: translate(-10px, -2px);
-}
-.add::after {
-  background-color: #1b263b;
-  width: 4px;
-  height: 20px;
-  top: 50%;
-  left: 50%;
-  transform: translate(-2px, -10px);
-}
-.remove::before {
-  background-color: #1b263b;
-  width: 14px;
-  height: 4px;
-  top: 46%;
-  left: 19%;
-  transform: translate(-5px, -1px);
-  transform: rotate(-60deg);
-}
-.remove::after {
-  background-color: #1b263b;
-  width: 4px;
-  height: 25px;
-  top: 16%;
-  left: 50%;
-  transform: translate(1px, -7px);
-  transform: rotate(60deg);
-}
 .d-card {
   display: grid;
   grid-template-columns: auto auto auto auto;
@@ -201,71 +243,85 @@ nav {
   grid-template-areas: "pic title title" "pic price cat" "des des des" "btn put tot";
   justify-content: space-evenly;
   align-items: center;
+
   button {
     background-color: #415a77;
     width: fit-content;
     grid-area: btn;
   }
+
   input {
     width: 50px;
     grid-area: put;
   }
+
   .total {
     grid-area: tot;
   }
 }
+
 .d-img {
   grid-area: pic;
   height: 200px;
 }
+
 .d-title {
   grid-area: title;
 }
+
 .d-descrition {
   grid-area: des;
 }
+
 .d-category {
   grid-area: cat;
 }
+
 .pricing {
   grid-area: price;
 }
+
 .back {
   width: 100%;
   background-color: #415a77;
   color: white;
 }
+
 .c-container {
   width: 90%;
 }
+
 .c-card {
   width: 100%;
   height: fit-content;
   display: flex;
   align-items: center;
   justify-content: space-evenly;
+
   input {
     width: 60px;
   }
+
   button {
     width: 80px;
   }
 }
+
 .c-title {
   width: 50%;
 }
+
 .c-img {
   width: 100px;
   height: 100px;
 }
+
 .loading {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(
-    -25px,
-    -25px
-  ); /* width: 50px;
+  transform: translate(-25px, -25px);
+  /* width: 50px;
   height: 50px;
   background-color: transparent;
   border: 8px solid #f44336;
@@ -275,6 +331,7 @@ nav {
   animation-iteration-count: infinite;
   animation-duration: 1.2s; */
 }
+
 .back {
   width: 200px;
   height: 25px;
@@ -285,6 +342,7 @@ nav {
   /* color: rgb(30, 30, 30); */
   text-align: center;
 }
+
 .loading::after {
   content: "";
   position: absolute;
@@ -299,6 +357,7 @@ nav {
   animation-duration: 1s;
   animation-timing-function: ease;
 }
+
 @keyframes rotate {
   from {
     transform: rotate(180deg);
@@ -306,10 +365,12 @@ nav {
 
     /* transform: translate(25px, 25px); */
   }
+
   to {
     transform: rotate(-180deg);
     border-right: 4px solid transparent;
   }
 }
+
 /* .loading:hover:after {
 } */
