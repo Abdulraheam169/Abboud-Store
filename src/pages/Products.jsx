@@ -25,30 +25,30 @@ export default function Products(prop) {
         <input
           type="text"
           id="searchName"
-          onChange={() =>
-            handleSearchParams(
-              "search",
-              document.querySelector("#searchName").value,
-            )
-          }
+          onChange={(e) => handleSearchParams("search", e.target.value)}
           placeholder="Search Your Product Here"
         />
-        <select
-          name="price"
-          id="price"
-          onClick={() =>
-            handleSearchParams(
-              "min-price",
-              document.querySelector("#price").value,
-            )
-          }
+        <button
+          onClick={() => {
+            console.log("ju");
+            return (
+              <select
+                name="price"
+                id="price"
+                onClick={(e) => handleSearchParams("min-price", e.target.value)}
+              >
+                <option value={0}>All Products</option>
+                <option value={50}>50</option>
+                <option value={100}>100</option>
+                <option value={150}>150</option>
+                <option value={200}>200</option>
+              </select>
+            );
+          }}
         >
-          <option value={0}>All Products</option>
-          <option value={50}>50</option>
-          <option value={100}>100</option>
-          <option value={150}>150</option>
-          <option value={200}>200</option>
-        </select>
+          {" "}
+          filter
+        </button>
         {searchParams.get("search") !== null ||
         searchParams.get("min-price") !== null ? (
           <button
