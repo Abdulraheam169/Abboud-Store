@@ -1,45 +1,50 @@
 import React from "react";
+import { LuTrash } from "react-icons/lu";
 
-export default function MyCard(props) {
-  const [items, setItems] = React.useState([]);
-  React.useEffect(() => {
-    setItems(props.items);
-  }, [props.items]);
-  function CreateItems() {
-    return items.map((product) => {
-      return (
-        <div className="product-card c-card" key={product.id} id={product.id}>
-          <img src={product.image} alt="" className="c-img" />
-          <div className="tot" id={product.newPrice}></div>
-          <div className="c-title">Title: {product.title}</div>
-          <div className="c-price" id={product.newPrice}>
-            Price: {product.newPrice}
-          </div>
-          <input
-            onChange={props.onChange}
-            defaultValue={
-              product.totalPrice ? product.totalPrice / product.newPrice : 1
-            }
-            min={1}
-            type="number"
-            name="count"
-            id="count"
-          />
-          {product.totalPrice ? <div>{product.totalPrice}</div> : undefined}
-          <button id={product.id} onClick={props.remove}>
-            Remove
-          </button>
-        </div>
-      );
-    });
+export default function MyCard({ items, onChange, remove }) {
+  if (!items || items.length === 0) {
+    return <div>Please add some Items</div>;
   }
+
   return (
-    <>
-      {items.length !== 0 ? (
-        <div className="c-container">{CreateItems()}</div>
-      ) : (
-        <div>Please add some Items</div>
-      )}
-    </>
+    <div className="c-container">
+      <div className="c-head">
+        <span className="c-img">Product</span>
+        <span className="c-title">Title</span>
+        <span className="c-price">Single</span>
+        <span className="c-quantity">Count</span>
+        <span className="c-total">Total</span>
+        <span className="remo"></span>
+      </div>
+      {items.map((product) => {
+        const quantity = product.quantity || 1;
+        const totalPrice = product.totalPrice || product.newPrice * quantity;
+
+        return (
+          <div className="product-card c-card" key={product.id}>
+            <img src={product.image} alt={product.title} className="c-img" />
+
+            <div className="c-title">{product.title}</div>
+
+            <div className="c-price">{product.newPrice}</div>
+
+            <input
+              onChange={(e) => onChange(product.id, parseInt(e.target.value))}
+              value={quantity}
+              min={1}
+              type="number"
+              name="count"
+              className="c-quantity"
+            />
+
+            <div className="c-total">{totalPrice}</div>
+
+            <button className="remo" onClick={() => remove(product.id)}>
+              <LuTrash />
+            </button>
+          </div>
+        );
+      })}
+    </div>
   );
 }

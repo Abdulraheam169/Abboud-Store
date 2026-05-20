@@ -47,18 +47,26 @@ export default function Market() {
       .then((data) => setProducts(data));
   }, []);
 
-  function handleQuantity(e) {
-    const base = e.currentTarget.parentNode.children[1].id;
-    const id = e.currentTarget.parentNode.id;
-    const val = parseInt(e.currentTarget.value);
+  function handleQuantity(id, newQuantity) {
+    if (newQuantity < 1) return;
+
     setProducts((prev) =>
-      prev.map((item) =>
-        item.id == id ? { ...item, totalPrice: base * val } : { ...item },
-      ),
+      prev.map((item) => {
+        if (item.id === id) {
+          return {
+            ...item,
+            quantity: newQuantity,
+            totalPrice: item.newPrice * newQuantity,
+          };
+        }
+        return item;
+      }),
     );
   }
-  function toggleAdded(e) {
-    let productId = e.currentTarget.id;
+  function toggleAdded(productId) {
+    // console.log(e);
+    // let productId = e.currentTarget.id;
+
     setProducts((prev) =>
       prev.map((pro) =>
         pro.id == productId ? { ...pro, isAdded: !pro.isAdded } : pro,

@@ -7,6 +7,7 @@ body {
 }
 
 #root {
+  font-family: Saira;
   color: #0d1b2e;
   width: 90%;
   margin: 10px auto;
@@ -221,6 +222,7 @@ nav {
     height: 35px;
     color: #1b263b;
     border: 2px solid #1b263b;
+    text-align: center;
   }
 }
 
@@ -303,30 +305,75 @@ nav {
 .c-container {
   width: 90%;
 }
-
+.c-head {
+  font-weight: bold;
+}
 .c-card {
-  width: 100%;
-  height: fit-content;
-  display: flex;
+  height: 100px;
+}
+.c-head,
+.c-card {
+  width: 100% !important;
+  margin: 5px 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 100px 1fr repeat(4, 100px);
+  grid-template-areas: "pic title single quant tot remo";
+  gap: 5px;
   align-items: center;
-  justify-content: space-evenly;
-
-  input {
+  text-align: left;
+  .c-img {
+    grid-area: pic;
+    width: 100px;
+  }
+  .c-title {
+    grid-area: title;
+  }
+  .c-price {
+    grid-area: single;
+  }
+  .c-quantity {
+    grid-area: quant;
     width: 60px;
   }
-
-  button {
+  .c-total {
+    grid-area: tot;
+  }
+  .remo {
+    grid-area: remo;
     width: 80px;
   }
 }
 
-.c-title {
-  width: 50%;
-}
-
-.c-img {
+.c-card .c-img {
   width: 100px;
   height: 100px;
+}
+@media (max-width: 776px) {
+  .c-head {
+    font-size: 12px;
+  }
+  .c-card {
+    height: 50px;
+
+    .c-img {
+      height: 50px;
+    }
+  }
+  .c-head,
+  .c-card {
+    grid-template-columns: 50px 1fr repeat(4, 40px);
+    gap: 5px;
+    .c-img {
+      width: 50px;
+    }
+    .c-quantity {
+      width: 40px;
+    }
+    .remo {
+      width: 30px;
+    }
+  }
 }
 
 .loading {

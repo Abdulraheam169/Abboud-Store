@@ -145,12 +145,12 @@ export default function Products(prop) {
             {product.category}
           </div>
           {product.isAvailable ? (
-            <button id={product.id} onClick={prop.toggle}>
+            <button id={product.id} onClick={() => prop.toggle(product.id)}>
               {product.isAdded ? <LuTrash2 /> : <LuShoppingCart />}
             </button>
           ) : undefined}
           <NavLink id={product.id} to={`${product.id}`} className="det">
-            go to details
+            Details
           </NavLink>
         </div>
       );
