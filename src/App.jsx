@@ -7,6 +7,7 @@ import MyCard from "./pages/MyCard";
 // import ProductsLayout from "./components/ProductsLayout";
 import Products from "./pages/Products";
 import Product from "./pages/Product";
+import FormPage from "./pages/FormPage";
 
 export default function Market() {
   const [categories] = React.useState([
@@ -99,6 +100,12 @@ export default function Market() {
                   onChange={handleQuantity}
                   remove={toggleAdded}
                 />
+              }
+            />
+            <Route
+              path="myCard/form"
+              element={
+                <FormPage items={products.filter((item) => item.isAdded)} />
               }
             />
             <Route

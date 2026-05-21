@@ -40,7 +40,7 @@ export default function About() {
         <h3>My Projects</h3>
         <li>
           <a target="_blank" href="https://abdulraheam169.github.io/Hangman-/">
-            <img src="src/images/hangman.webp" alt="" />
+            <img src="../images/hangman.webp" alt="" />
             <span>Hangman Game</span>
           </a>
         </li>
@@ -50,7 +50,7 @@ export default function About() {
             target="_blank"
             href="https://abdulraheam169.github.io/html-css-template-1/"
           >
-            <img src="src/images/template.webp" alt="" />
+            <img src="../images/template.webp" alt="" />
             <span>HTML/CSS Template 1</span>
           </a>
         </li>
@@ -59,20 +59,20 @@ export default function About() {
             target="_blank"
             href="https://abdulraheam169.github.io/html-css-Template-3/"
           >
-            <img src="src/images/template (1).webp" alt="" />
+            <img src="../images/template (1).webp" alt="" />
             <span>HTML/CSS Template 2</span>
           </a>
         </li>
 
         <li>
           <a target="_blank" href="">
-            <img src="src/images/dice.jpg" alt="" />
+            <img src="../images/dice.jpg" alt="" />
             <span>Tenzies</span>
           </a>
         </li>
         <li>
           <a target="_blank" href="https://abdulraheam169.github.io/ToDo-List/">
-            <img src="src/images/to-do-list-icon-vector.webp" alt="" />
+            <img src="../images/to-do-list-icon-vector.webp" alt="" />
             <span>ToDo List</span>
           </a>
         </li>

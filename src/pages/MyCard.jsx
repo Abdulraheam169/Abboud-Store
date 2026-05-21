@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router";
 import { LuDollarSign, LuTrash } from "react-icons/lu";
 
 export default function MyCard({ items, onChange, remove }) {
@@ -61,6 +62,7 @@ export default function MyCard({ items, onChange, remove }) {
       <div>
         Total Cash : {total} <LuDollarSign />
       </div>
+      <Link to="form">go to foem</Link>
     </div>
   );
 }
