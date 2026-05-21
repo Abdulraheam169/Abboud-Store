@@ -5,7 +5,7 @@ export default function About() {
     <div className="about-me">
       <img
         className="a-img"
-        src="src/images/personal.png"
+        src="../images/personal.png"
         alt=""
         width={"100px"}
       />
@@ -59,7 +59,7 @@ export default function About() {
             target="_blank"
             href="https://abdulraheam169.github.io/html-css-Template-3/"
           >
-            <img src="../images/template (1).webp" alt="" />
+            <img src="../images/template-2.webp" alt="" />
             <span>HTML/CSS Template 2</span>
           </a>
         </li>
