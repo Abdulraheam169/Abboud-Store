@@ -1,10 +1,22 @@
 import React from "react";
-import { LuTrash } from "react-icons/lu";
+import { LuDollarSign, LuTrash } from "react-icons/lu";
 
 export default function MyCard({ items, onChange, remove }) {
   if (!items || items.length === 0) {
     return <div>Please add some Items</div>;
   }
+  const [total, setTotal] = React.useState(0);
+  React.useEffect(() => {
+    setTotal(0);
+    items.map((pro) => {
+      console.log(total);
+      console.log(total + pro.newPrice);
+      console.log(pro.newQuantity);
+      pro.quantity
+        ? setTotal((prev) => (prev += pro.totalPrice))
+        : setTotal((prev) => (prev += pro.newPrice));
+    });
+  }, [items]);
 
   return (
     <div className="c-container">
@@ -45,6 +57,10 @@ export default function MyCard({ items, onChange, remove }) {
           </div>
         );
       })}
+      <hr />
+      <div>
+        Total Cash : {total} <LuDollarSign />
+      </div>
     </div>
   );
 }
