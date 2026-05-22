@@ -456,8 +456,9 @@ nav {
     grid-area: pro;
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: space-around;
     text-align: center;
+
     h3 {
       width: 100%;
     }
@@ -482,6 +483,28 @@ nav {
   ul {
     list-style: none;
     padding: 0;
+  }
+}
+@media (max-width: 776px) {
+  .about-me {
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto auto auto auto auto;
+    grid-template-areas: "name img" "per per" "info info" "skills skills" "pro pro";
+    align-items: center;
+    justify-items: left;
+    .a-name {
+      font-size: 18px;
+    }
+    .a-img {
+      width: 150px;
+      height: 225px;
+    }
+    a {
+      width: 150px;
+    }
+    /* .a-projects {
+      justify-content: center;
+    } */
   }
 }
 @keyframes rotate {
