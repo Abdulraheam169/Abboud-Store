@@ -1,8 +1,14 @@
 import React from "react";
+import personal from "/personal.png";
+import hangman from "/hangman.webp";
+import template from "/template.webp";
+import template2 from "/template-2.webp";
+import dice from "/dice.jpg";
+import toDoList from "/to-do-list-icon-vector.webp";
 export default function About() {
   return (
     <div className="about-me">
-      <img className="a-img" src="/personal.png" alt="" width={"100px"} />
+      <img className="a-img" src={personal} alt="" width={"100px"} />
       <h1 className="a-name">Abd Al-Raheam Al-Ruqaya</h1>
 
       <ul className="a-personal">
@@ -37,7 +43,7 @@ export default function About() {
             rel="noopener noreferrer"
             href="https://abdulraheam169.github.io/Hangman-/"
           >
-            <img src="/hangman.webp" alt="" />
+            <img src={hangman} alt="" />
             <span>Hangman Game</span>
           </a>
         </li>
@@ -48,7 +54,7 @@ export default function About() {
             rel="noopener noreferrer"
             href="https://abdulraheam169.github.io/html-css-template-1/"
           >
-            <img src="/template.webp" alt="" />
+            <img src={template} alt="" />
             <span>HTML/CSS Template 1</span>
           </a>
         </li>
@@ -58,14 +64,14 @@ export default function About() {
             rel="noopener noreferrer"
             href="https://abdulraheam169.github.io/html-css-Template-3/"
           >
-            <img src="/template-2.webp" alt="" />
+            <img src={template2} alt="" />
             <span>HTML/CSS Template 2</span>
           </a>
         </li>
 
         <li>
           <a target="_blank" rel="noopener noreferrer" href="">
-            <img src="/dice.jpg" alt="" />
+            <img src={dice} alt="" />
             <span>Tenzies</span>
           </a>
         </li>
@@ -75,11 +81,7 @@ export default function About() {
             rel="noopener noreferrer"
             href="https://abdulraheam169.github.io/ToDo-List/"
           >
-            <img
-              src="
-            /to-do-list-icon-vector.webp"
-              alt=""
-            />
+            <img src={toDoList} alt="" />
             <span>ToDo List</span>
           </a>
         </li>
