@@ -1,11 +1,49 @@
 import React from "react";
-import { Page, Text, View, Document, StyleSheet } from "@react-pdf/renderer";
+import {
+  Page,
+  Text,
+  View,
+  Document,
+  StyleSheet,
+  Font,
+} from "@react-pdf/renderer";
+import arabicReshaper from "arabic-reshaper";
+import Cairo from "/Cairo-Regular.ttf";
+
+Font.register({
+  family: "Cairo",
+  src: Cairo,
+});
+
+const formatText = (text) => {
+  if (!text) return "";
+  const str = String(text);
+  const hasArabic = /[\u0600-\u06FF]/.test(str);
+
+  if (hasArabic) {
+    if (typeof arabicReshaper === "function") {
+      return arabicReshaper(str);
+    } else if (arabicReshaper && typeof arabicReshaper.reshape === "function") {
+      return arabicReshaper.reshape(str);
+    } else if (arabicReshaper && typeof arabicReshaper.default === "function") {
+      return arabicReshaper.default(str);
+    } else if (
+      arabicReshaper &&
+      arabicReshaper.default &&
+      typeof arabicReshaper.default.reshape === "function"
+    ) {
+      return arabicReshaper.default.reshape(str);
+    }
+  }
+
+  return str;
+};
 
 const styles = StyleSheet.create({
   page: {
     padding: 40,
     backgroundColor: "#ffffff",
-    fontFamily: "Helvetica",
+    fontFamily: "Cairo",
   },
   headerContainer: {
     flexDirection: "row",
@@ -55,8 +93,8 @@ const styles = StyleSheet.create({
     fontSize: 11,
     color: "#2C3E50",
     marginBottom: 4,
+    textAlign: "left",
   },
-  // تنسيقات الجدول
   table: {
     width: "100%",
     flexDirection: "column",
@@ -77,10 +115,10 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: "#EEEEEE",
   },
-  col1: { width: "40%" },
+  col1: { width: "40%", textAlign: "left" },
   col2: { width: "20%", textAlign: "center" },
   col3: { width: "20%", textAlign: "center" },
-  col4: { width: "20%", textAlign: "right" },
+  col4: { width: "20%", textAlign: "left" },
   tableHeaderText: {
     fontSize: 10,
     color: "#1A252C",
@@ -156,13 +194,13 @@ export default function Invoice({ userInfo = {}, items = [], total = 0 }) {
         <View style={styles.customerSection}>
           <Text style={styles.billToTitle}>Bill To:</Text>
           <Text style={styles.customerText}>
-            {String(userInfo?.name || "Customer Name")}
+            {formatText(userInfo?.name || "Customer Name")}
           </Text>
           <Text style={styles.customerText}>
-            {String(userInfo?.address || "-")}
+            {formatText(userInfo?.address || "-")}
           </Text>
           <Text style={styles.customerText}>
-            {String(userInfo?.phone || "-")}
+            {formatText(userInfo?.phone || "-")}
           </Text>
         </View>
 
@@ -189,10 +227,10 @@ export default function Invoice({ userInfo = {}, items = [], total = 0 }) {
               <View style={styles.tableRow} key={item.id || Math.random()}>
                 <View style={styles.col1}>
                   <Text style={styles.itemTitle}>
-                    {String(item.title || "Product")}
+                    {formatText(item.title || "Product")}
                   </Text>
                   <Text style={styles.itemDesc}>
-                    {String(item.description || "No description")}
+                    {formatText(item.description || "No description")}
                   </Text>
                 </View>
                 <Text style={[styles.col2, styles.tableCell]}>

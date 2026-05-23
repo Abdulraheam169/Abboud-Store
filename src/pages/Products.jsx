@@ -18,6 +18,7 @@ export default function Products(prop) {
       s.set(key, val);
     }
     setSearchParams(s);
+    console.log(val);
   }
   function createFilters() {
     return (
@@ -28,34 +29,25 @@ export default function Products(prop) {
           onChange={(e) => handleSearchParams("search", e.target.value)}
           placeholder="Search Your Product Here"
         />
-        <button
-          onClick={() => {
-            console.log("ju");
-            return (
-              <select
-                name="price"
-                id="price"
-                onClick={(e) => handleSearchParams("min-price", e.target.value)}
-              >
-                <option value={0}>All Products</option>
-                <option value={50}>50</option>
-                <option value={100}>100</option>
-                <option value={150}>150</option>
-                <option value={200}>200</option>
-              </select>
-            );
+        <input
+          type="number"
+          name="max-price"
+          id="max-price"
+          placeholder="Max Price"
+          onChange={(e) => {
+            e.target.value === ""
+              ? handleSearchParams("max-price", null)
+              : handleSearchParams("max-price", e.target.value);
           }}
-        >
-          {" "}
-          filter
-        </button>
+          defaultValue={searchParams.get("max-price") || null}
+        />
         {searchParams.get("search") !== null ||
-        searchParams.get("min-price") !== null ? (
+        searchParams.get("max-price") !== null ? (
           <button
             className="reset-search"
             onClick={() => {
               setSearchParams({});
-              document.querySelector("#price").value = 0;
+              document.querySelector("#max-price").value = null;
               document.querySelector("#searchName").value = null;
             }}
           >
@@ -99,6 +91,15 @@ export default function Products(prop) {
           ))
         : (prods = prop.products.filter(
             (pro) => pro.newPrice >= searchParams.get("min-price"),
+          ));
+    }
+    if (searchParams.get("max-price") !== null) {
+      prods
+        ? (prods = prods.filter(
+            (pro) => pro.newPrice <= searchParams.get("max-price"),
+          ))
+        : (prods = prop.products.filter(
+            (pro) => pro.newPrice <= searchParams.get("max-price"),
           ));
     }
     if (searchParams.get("search")) {

@@ -5,17 +5,6 @@ export default function ProductPage({ products, toggle, onChange }) {
 
   const product = products.find((pro) => String(pro.id) === String(id));
 
-  if (!product) {
-    return (
-      <div className="error-container">
-        <NavLink to=".." relative="path" className="back">
-          Back To Products
-        </NavLink>
-        <div className="error-message">Product not found!</div>
-      </div>
-    );
-  }
-
   const quantity = product.quantity || 1;
   const totalPrice = product.totalPrice || product.newPrice * quantity;
 
@@ -31,14 +20,11 @@ export default function ProductPage({ products, toggle, onChange }) {
 
           <img src={product.image} alt={product.title} className="d-img" />
 
-          <div className="pricing">
-            <div className="d-old-price">
-              Old Price: <span>{product.oldPrice}</span>
-            </div>
-            <div className="d-price">Price: {product.newPrice}</div>
-          </div>
+          <div className="d-price">&#x24;{product.newPrice}</div>
 
-          <div className="d-descrition">Description: {product.description}</div>
+          <div className="d-description">
+            Description: {product.description}
+          </div>
           <div className="d-category">Category: {product.category}</div>
 
           <hr />
@@ -57,13 +43,11 @@ export default function ProductPage({ products, toggle, onChange }) {
                 name="count"
               />
 
-              <div className="total">Total: {totalPrice}</div>
+              <div className="total">Total: {totalPrice}&#x24;</div>
             </>
           ) : product.isAvailable ? (
             <button onClick={() => toggle(product.id)}>Add To The Card</button>
-          ) : (
-            <div className="out-of-stock">Out of Stock</div>
-          )}
+          ) : undefined}
         </div>
       </div>
     </>

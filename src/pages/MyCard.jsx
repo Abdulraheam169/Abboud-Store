@@ -62,28 +62,28 @@ export default function MyCard({ items, onChange, remove }) {
       <div style={{ textAlign: "right" }}>
         Total Cash : {total} <LuDollarSign />
       </div>
-      <div
+      <Link
+        to="form"
         style={{
-          width: "100%",
-          height: "40px",
-          backgroundColor: " #415a77",
-          textAlign: "center",
-          padding: "4px",
-          fontSize: "18px",
-          fontWeight: "600",
-          borderRadius: "10px",
+          textDecoration: "none",
+          color: "white",
         }}
       >
-        <Link
-          to="form"
+        <div
           style={{
-            textDecoration: "none",
-            color: "white",
+            width: "100%",
+            height: "40px",
+            backgroundColor: " #415a77",
+            textAlign: "center",
+            padding: "4px",
+            fontSize: "18px",
+            fontWeight: "600",
+            borderRadius: "10px",
           }}
         >
           Continue
-        </Link>
-      </div>
+        </div>
+      </Link>
     </div>
   );
 }

@@ -11,6 +11,17 @@ export default function FormPage({ items = [] }) {
   });
   const [showInvoice, setShowInvoice] = React.useState(false);
 
+  React.useEffect(() => {
+    if (showInvoice) {
+      setTimeout(() => {
+        window.scrollBy({
+          top: 400,
+          left: 0,
+          behavior: "smooth",
+        });
+      }, 300);
+    }
+  }, [showInvoice]);
   function getInfo(e) {
     e.preventDefault();
     const formdata = new FormData(e.target);
