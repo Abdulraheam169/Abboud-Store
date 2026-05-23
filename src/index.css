@@ -107,6 +107,18 @@ nav {
     display: block;
   }
 }
+@media (max-width: 766px) {
+  .home-container {
+    height: 200px;
+    img {
+      width: 50%;
+      margin: 20px 0;
+    }
+    h2 {
+      font-size: 18px;
+    }
+  }
+}
 .cat {
   width: 100%;
   margin: 30px auto 10px;
