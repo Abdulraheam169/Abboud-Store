@@ -5,11 +5,4 @@ import react from "@vitejs/plugin-react";
 export default defineConfig({
   plugins: [react()],
   base: "/Abboud-Store/",
-  build: {
-    rolldownOptions: {
-      output: {
-        codeSplitting: true,
-      },
-    },
-  },
 });
