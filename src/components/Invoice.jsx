@@ -194,13 +194,13 @@ export default function Invoice({ userInfo = {}, items = [], total = 0 }) {
         <View style={styles.customerSection}>
           <Text style={styles.billToTitle}>Bill To:</Text>
           <Text style={styles.customerText}>
-            {formatText(userInfo?.name || "Customer Name")}
+            Name: {formatText(userInfo?.name || "Customer Name")}
           </Text>
           <Text style={styles.customerText}>
-            {formatText(userInfo?.address || "-")}
+            Address: {formatText(userInfo?.address || "-")}
           </Text>
           <Text style={styles.customerText}>
-            {formatText(userInfo?.phone || "-")}
+            Phone: {formatText(userInfo?.phone || "-")}
           </Text>
         </View>
 

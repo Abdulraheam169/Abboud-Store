@@ -2,18 +2,12 @@ import React, { lazy, Suspense } from "react";
 import { HashRouter, Routes, Route } from "react-router";
 import PageLayout from "./PageLayout";
 
-const Home = lazy(() => import("./pages/Home.jsx"));
-const About = lazy(() => import("./pages/About.jsx"));
-const MyCard = lazy(() => import("./pages/MyCard.jsx"));
-const Products = lazy(() => import("./pages/Products.jsx"));
-const Product = lazy(() => import("./pages/Product.jsx"));
-const FormPage = lazy(() => import("./pages/FormPage.jsx"));
-// import Home from "./pages/Home";
-// import About from "./pages/About";
-// import MyCard from "./pages/MyCard";
-// import Products from "./pages/Products";
-// import Product from "./pages/Product";
-// import FormPage from "./pages/FormPage";
+import Home from "./pages/Home";
+import About from "./pages/About";
+import MyCard from "./pages/MyCard";
+import Products from "./pages/Products";
+import Product from "./pages/Product";
+import FormPage from "./pages/FormPage";
 
 export default function Market() {
   const [categories] = React.useState([
@@ -91,101 +85,51 @@ export default function Market() {
     );
   }
 
-  // return (
-  //   <>
-  //     <HashRouter>
-  //       <Routes>
-  //         <Route path="/" element={<PageLayout />}>
-  //           <Route index element={<Home />} />
-  //           <Route path="aboutUs" element={<About />} />
-  //           <Route
-  //             path="myCard"
-  //             element={
-  //               <MyCard
-  //                 items={products.filter((item) => item.isAdded)}
-  //                 onChange={handleQuantity}
-  //                 remove={toggleAdded}
-  //               />
-  //             }
-  //           />
-  //           <Route
-  //             path="myCard/form"
-  //             element={
-  //               <FormPage items={products.filter((item) => item.isAdded)} />
-  //             }
-  //           />
-  //           <Route
-  //             path="products"
-  //             element={
-  //               <Products
-  //                 products={products}
-  //                 categories={categories}
-  //                 toggle={toggleAdded}
-  //               />
-  //             }
-  //           />
-  //           <Route
-  //             path="products/:id"
-  //             element={
-  //               <Product
-  //                 products={products}
-  //                 toggle={toggleAdded}
-  //                 onChange={handleQuantity}
-  //               />
-  //             }
-  //           />
-  //         </Route>
-  //       </Routes>
-  //     </HashRouter>
-  //   </>
-  return (
-    <>
-      <HashRouter>
-        <Suspense fallback={<div className="loading"></div>}>
-          <Routes>
-            <Route path="/" element={<PageLayout />}>
-              <Route index element={<Home />} />
-              <Route path="aboutUs" element={<About />} />
-              <Route
-                path="myCard"
-                element={
-                  <MyCard
-                    items={products.filter((item) => item.isAdded)}
-                    onChange={handleQuantity}
-                    remove={toggleAdded}
-                  />
-                }
+  return;
+  <>
+    <HashRouter>
+      <Routes>
+        <Route path="/" element={<PageLayout />}>
+          <Route index element={<Home />} />
+          <Route path="aboutUs" element={<About />} />
+          <Route
+            path="myCard"
+            element={
+              <MyCard
+                items={products.filter((item) => item.isAdded)}
+                onChange={handleQuantity}
+                remove={toggleAdded}
               />
-              <Route
-                path="myCard/form"
-                element={
-                  <FormPage items={products.filter((item) => item.isAdded)} />
-                }
+            }
+          />
+          <Route
+            path="myCard/form"
+            element={
+              <FormPage items={products.filter((item) => item.isAdded)} />
+            }
+          />
+          <Route
+            path="products"
+            element={
+              <Products
+                products={products}
+                categories={categories}
+                toggle={toggleAdded}
               />
-              <Route
-                path="products"
-                element={
-                  <Products
-                    products={products}
-                    categories={categories}
-                    toggle={toggleAdded}
-                  />
-                }
+            }
+          />
+          <Route
+            path="products/:id"
+            element={
+              <Product
+                products={products}
+                toggle={toggleAdded}
+                onChange={handleQuantity}
               />
-              <Route
-                path="products/:id"
-                element={
-                  <Product
-                    products={products}
-                    toggle={toggleAdded}
-                    onChange={handleQuantity}
-                  />
-                }
-              />
-            </Route>
-          </Routes>
-        </Suspense>
-      </HashRouter>
-    </>
-  );
+            }
+          />
+        </Route>
+      </Routes>
+    </HashRouter>
+  </>;
 }
