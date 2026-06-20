@@ -2,12 +2,12 @@ import React, { lazy, Suspense } from "react";
 import { HashRouter, Routes, Route } from "react-router";
 import PageLayout from "./PageLayout";
 
-import Home from "./pages/Home";
-import About from "./pages/About";
-import MyCard from "./pages/MyCard";
-import Products from "./pages/Products";
-import Product from "./pages/Product";
-import FormPage from "./pages/FormPage";
+const Home = lazy(() => import("./pages/Home.jsx"));
+const About = lazy(() => import("./pages/About.jsx"));
+const MyCard = lazy(() => import("./pages/MyCard.jsx"));
+const Products = lazy(() => import("./pages/Products.jsx"));
+const Product = lazy(() => import("./pages/Product.jsx"));
+const FormPage = lazy(() => import("./pages/FormPage.jsx"));
 
 export default function Market() {
   const [categories] = React.useState([
@@ -65,71 +65,108 @@ export default function Market() {
     );
   }
   function toggleAdded(productId) {
-    // console.log(e);
-    // let productId = e.currentTarget.id;
-
     setProducts((prev) =>
       prev.map((pro) =>
         pro.id == productId ? { ...pro, isAdded: !pro.isAdded } : pro,
       ),
     );
   }
-  function removeItem(e) {
-    let productId = e.currentTarget.id;
-    setProducts((prev) =>
-      prev.map((pro) =>
-        pro.id == productId
-          ? { ...pro, isAdded: false, totalPrice: pro.newPrice }
-          : pro,
-      ),
-    );
-  }
 
-  return;
-  <>
-    <HashRouter>
-      <Routes>
-        <Route path="/" element={<PageLayout />}>
-          <Route index element={<Home />} />
-          <Route path="aboutUs" element={<About />} />
-          <Route
-            path="myCard"
-            element={
-              <MyCard
-                items={products.filter((item) => item.isAdded)}
-                onChange={handleQuantity}
-                remove={toggleAdded}
+  // return (
+  //   <>
+  //     <HashRouter>
+  //       <Routes>
+  //         <Route path="/" element={<PageLayout />}>
+  //           <Route index element={<Home />} />
+  //           <Route path="aboutUs" element={<About />} />
+  //           <Route
+  //             path="myCard"
+  //             element={
+  //               <MyCard
+  //                 items={products.filter((item) => item.isAdded)}
+  //                 onChange={handleQuantity}
+  //                 remove={toggleAdded}
+  //               />
+  //             }
+  //           />
+  //           <Route
+  //             path="myCard/form"
+  //             element={
+  //               <FormPage items={products.filter((item) => item.isAdded)} />
+  //             }
+  //           />
+  //           <Route
+  //             path="products"
+  //             element={
+  //               <Products
+  //                 products={products}
+  //                 categories={categories}
+  //                 toggle={toggleAdded}
+  //               />
+  //             }
+  //           />
+  //           <Route
+  //             path="products/:id"
+  //             element={
+  //               <Product
+  //                 products={products}
+  //                 toggle={toggleAdded}
+  //                 onChange={handleQuantity}
+  //               />
+  //             }
+  //           />
+  //         </Route>
+  //       </Routes>
+  //     </HashRouter>
+  //   </>
+  return (
+    <>
+      <HashRouter>
+        <Suspense fallback={<div className="loading"></div>}>
+          <Routes>
+            <Route path="/" element={<PageLayout />}>
+              <Route index element={<Home />} />
+              <Route path="aboutUs" element={<About />} />
+              <Route
+                path="myCard"
+                element={
+                  <MyCard
+                    items={products.filter((item) => item.isAdded)}
+                    onChange={handleQuantity}
+                    remove={toggleAdded}
+                  />
+                }
               />
-            }
-          />
-          <Route
-            path="myCard/form"
-            element={
-              <FormPage items={products.filter((item) => item.isAdded)} />
-            }
-          />
-          <Route
-            path="products"
-            element={
-              <Products
-                products={products}
-                categories={categories}
-                toggle={toggleAdded}
+              <Route
+                path="myCard/form"
+                element={
+                  <FormPage items={products.filter((item) => item.isAdded)} />
+                }
               />
-            }
-          />
-          <Route
-            path="products/:id"
-            element={
-              <Product
-                products={products}
-                toggle={toggleAdded}
-                onChange={handleQuantity}
+              <Route
+                path="products"
+                element={
+                  <Products
+                    products={products}
+                    categories={categories}
+                    toggle={toggleAdded}
+                  />
+                }
               />
-            }
-          />
-        </Route>
-      </Routes>
-    </HashRouter>
-  </>;
+              <Route
+                path="products/:id"
+                element={
+                  <Product
+                    products={products}
+                    toggle={toggleAdded}
+                    onChange={handleQuantity}
+                  />
+                }
+              />
+            </Route>
+          </Routes>
+        </Suspense>
+      </HashRouter>
+    </>
+  );
 }
