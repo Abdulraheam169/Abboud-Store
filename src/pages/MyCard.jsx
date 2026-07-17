@@ -1,23 +1,23 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router";
 import { LuDollarSign, LuTrash } from "react-icons/lu";
+import { stateStore } from "../state-store/state-store";
 
-export default function MyCard({ items, onChange, remove }) {
-  if (!items || items.length === 0) {
+export default function MyCard() {
+  const ss = useContext(stateStore);
+
+  if (!ss.cart || ss.cart.length === 0) {
     return <div>Please add some Items</div>;
   }
   const [total, setTotal] = React.useState(0);
   React.useEffect(() => {
     setTotal(0);
-    items.map((pro) => {
-      console.log(total);
-      console.log(total + pro.newPrice);
-      console.log(pro.newQuantity);
+    ss.cart.map((pro) => {
       pro.quantity
         ? setTotal((prev) => (prev += pro.totalPrice))
         : setTotal((prev) => (prev += pro.newPrice));
     });
-  }, [items]);
+  }, [ss.cart]);
 
   return (
     <div className="c-container">
@@ -29,7 +29,7 @@ export default function MyCard({ items, onChange, remove }) {
         <span className="c-total">Total</span>
         <span className="remo"></span>
       </div>
-      {items.map((product) => {
+      {ss.cart.map((product) => {
         const quantity = product.quantity || 1;
         const totalPrice = product.totalPrice || product.newPrice * quantity;
 
@@ -42,7 +42,9 @@ export default function MyCard({ items, onChange, remove }) {
             <div className="c-price">{product.newPrice}</div>
 
             <input
-              onChange={(e) => onChange(product.id, parseInt(e.target.value))}
+              onChange={(e) =>
+                ss.handleQuantity(product.id, parseInt(e.target.value))
+              }
               value={quantity}
               min={1}
               type="number"
@@ -52,7 +54,10 @@ export default function MyCard({ items, onChange, remove }) {
 
             <div className="c-total">{totalPrice}</div>
 
-            <button className="remo" onClick={() => remove(product.id)}>
+            <button
+              className="remo"
+              onClick={() => ss.toggleAddState(product.id)}
+            >
               <LuTrash />
             </button>
           </div>

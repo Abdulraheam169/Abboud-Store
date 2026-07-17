@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { NavLink, useSearchParams } from "react-router";
 import {
   LuShoppingCart,
@@ -7,8 +7,10 @@ import {
   LuDollarSign,
   LuRefreshCw,
 } from "react-icons/lu";
+import { stateStore } from "../state-store/state-store";
 
-export default function Products(prop) {
+export default function Products() {
+  const ss = useContext(stateStore);
   const [searchParams, setSearchParams] = useSearchParams();
   function handleSearchParams(key, val) {
     const s = new URLSearchParams(searchParams);
@@ -18,7 +20,6 @@ export default function Products(prop) {
       s.set(key, val);
     }
     setSearchParams(s);
-    console.log(val);
   }
   function createFilters() {
     return (
@@ -58,7 +59,7 @@ export default function Products(prop) {
     );
   }
   function createCategories() {
-    return prop.categories.map((category) => {
+    return ss.categories.map((category) => {
       return (
         <button
           key={category.id}
@@ -77,10 +78,10 @@ export default function Products(prop) {
       searchParams.get("category") === null &&
       searchParams.get("min-price") === null
     ) {
-      prods = prop.products;
+      prods = ss.products;
     }
     if (searchParams.get("category") !== null) {
-      prods = prop.products.filter(
+      prods = ss.products.filter(
         (pro) => pro.category === searchParams.get("category"),
       );
     }
@@ -89,7 +90,7 @@ export default function Products(prop) {
         ? (prods = prods.filter(
             (pro) => pro.newPrice >= searchParams.get("min-price"),
           ))
-        : (prods = prop.products.filter(
+        : (prods = ss.products.filter(
             (pro) => pro.newPrice >= searchParams.get("min-price"),
           ));
     }
@@ -98,7 +99,7 @@ export default function Products(prop) {
         ? (prods = prods.filter(
             (pro) => pro.newPrice <= searchParams.get("max-price"),
           ))
-        : (prods = prop.products.filter(
+        : (prods = ss.products.filter(
             (pro) => pro.newPrice <= searchParams.get("max-price"),
           ));
     }
@@ -109,7 +110,7 @@ export default function Products(prop) {
               .toLowerCase()
               .includes(searchParams.get("search").toLowerCase()),
           ))
-        : (prods = prop.products.filter(
+        : (prods = ss.products.filter(
             pro.title.includes(searchParams.get("search")),
           ));
     }
@@ -146,7 +147,10 @@ export default function Products(prop) {
             {product.category}
           </div>
           {product.isAvailable ? (
-            <button id={product.id} onClick={() => prop.toggle(product.id)}>
+            <button
+              id={product.id}
+              onClick={() => ss.toggleAddState(product.id)}
+            >
               {product.isAdded ? <LuTrash2 /> : <LuShoppingCart />}
             </button>
           ) : undefined}
@@ -157,8 +161,7 @@ export default function Products(prop) {
       );
     });
   }
-
-  return prop.products.length > 0 ? (
+  return ss.products.length > 0 ? (
     <>
       <div className="search-bar">{createFilters()}</div>
       <div className="cat">

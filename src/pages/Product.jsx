@@ -1,9 +1,12 @@
 import { useParams, NavLink } from "react-router";
+import { useContext } from "react";
+import { stateStore } from "../state-store/state-store";
 
-export default function ProductPage({ products, toggle, onChange }) {
+export default function ProductPage() {
+  const ss = useContext(stateStore);
   const { id } = useParams();
 
-  const product = products.find((pro) => String(pro.id) === String(id));
+  const product = ss.products.find((pro) => String(pro.id) === String(id));
 
   const quantity = product.quantity || 1;
   const totalPrice = product.totalPrice || product.newPrice * quantity;
@@ -31,12 +34,17 @@ export default function ProductPage({ products, toggle, onChange }) {
 
           {product.isAdded ? (
             <>
-              <button onClick={() => toggle(product.id)} id={product.id}>
+              <button
+                onClick={() => ss.toggleAddState(product.id)}
+                id={product.id}
+              >
                 Remove From The Card
               </button>
 
               <input
-                onChange={(e) => onChange(product.id, parseInt(e.target.value))}
+                onChange={(e) =>
+                  ss.handleQuantity(product.id, parseInt(e.target.value))
+                }
                 value={quantity}
                 min={1}
                 type="number"
@@ -46,7 +54,9 @@ export default function ProductPage({ products, toggle, onChange }) {
               <div className="total">Total: {totalPrice}&#x24;</div>
             </>
           ) : product.isAvailable ? (
-            <button onClick={() => toggle(product.id)}>Add To The Card</button>
+            <button onClick={() => ss.toggleAddState(product.id)}>
+              Add To The Card
+            </button>
           ) : undefined}
         </div>
       </div>
