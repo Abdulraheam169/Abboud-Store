@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import MyDocument from "../components/Invoice";
+import { stateStore } from "../state-store/state-store";
 
-export default function FormPage({ items = [] }) {
+export default function FormPage() {
   const [user, setUser] = React.useState({
     name: "",
     phone: "",
@@ -10,7 +11,7 @@ export default function FormPage({ items = [] }) {
     address: "",
   });
   const [showInvoice, setShowInvoice] = React.useState(false);
-
+  const ss = useContext(stateStore);
   React.useEffect(() => {
     if (showInvoice) {
       setTimeout(() => {
@@ -35,12 +36,11 @@ export default function FormPage({ items = [] }) {
   }
 
   function getTotal() {
-    return items.reduce((acc, pro) => {
+    return ss.cart.reduce((acc, pro) => {
       const price = pro.totalPrice || pro.newPrice;
       return acc + price;
     }, 0);
   }
-
   return (
     <>
       <h1>Please Write Down Your Information</h1>
@@ -66,7 +66,7 @@ export default function FormPage({ items = [] }) {
 
           <PDFDownloadLink
             document={
-              <MyDocument userInfo={user} items={items} total={getTotal()} />
+              <MyDocument userInfo={user} items={ss.cart} total={getTotal()} />
             }
             fileName="invoice.pdf"
           >

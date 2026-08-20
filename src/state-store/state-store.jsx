@@ -1,81 +1,139 @@
-import React, { Children, useState, useEffect } from "react";
-import Products from "../pages/Products";
-export const stateStore = React.createContext(null);
+import {
+  createSlice,
+  configureStore,
+  createAsyncThunk,
+} from "@reduxjs/toolkit";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../firebaseConfig";
+import { defaultSerializeQueryArgs } from "@reduxjs/toolkit/query";
+import { current } from "@reduxjs/toolkit";
 
-export function Provider({ children }) {
-  const [products, setProducts] = useState([]);
-  const [cart, setCart] = useState([]);
+// export const fetchProducts = createAsyncThunk(
+//   "products/fetchProducts",
+//   async () => {
+//     const querySnapshot = await getDocs(collection(db, "products"));
+//     console.log(querySnapshot.size);
+//     const productsList = [];
+//     querySnapshot.forEach((doc) => {
+//       productsList.push({ id: doc.id, ...doc.data() });
+//     });
+//     return productsList;
+//   },
+// );
+export const fetchProducts = createAsyncThunk(
+  "products/fetchProducts",
+  async () => {
+    try {
+      console.log("جاري الاتصال بقاعدة البيانات...", db); // إذا طبع undefined فالمشكلة في ملف الكونفيغ
 
-  React.useEffect(() => {
-    fetch("https://69fd2d9630ad0a6fd1c0867d.mockapi.io/products/products")
-      .then((response) => response.json())
-      .then((data) => setProducts(data));
-  }, []);
-  const [categories] = React.useState([
-    {
-      id: 1,
-      name: "Tech",
-      description: "Gadgets, gear, and electronics to power your digital life.",
-      image:
-        "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='800'%3E%3Crect width='100%25' height='100%25' fill='%2366cdaa'/%3E%3Ctext x='50%25' y='50%25' font-size='350' text-anchor='middle' dominant-baseline='middle'%3E💻%3C/text%3E%3C/svg%3E",
-    },
-    {
-      id: 2,
-      name: "Workspace",
-      description: "Workspace essentials for productivity and organization.",
-      image:
-        "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='800'%3E%3Crect width='100%25' height='100%25' fill='%2366cdaa'/%3E%3Ctext x='50%25' y='50%25' font-size='350' text-anchor='middle' dominant-baseline='middle'%3E🗄️%3C/text%3E%3C/svg%3E",
-    },
-    {
-      id: 3,
-      name: "Home Decor",
-      description: "Decor and essentials to elevate your living space.",
-      image:
-        "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='800'%3E%3Crect width='100%25' height='100%25' fill='%2366cdaa'/%3E%3Ctext x='50%25' y='50%25' font-size='350' text-anchor='middle' dominant-baseline='middle'%3E🪴%3C/text%3E%3C/svg%3E",
-    },
-    {
-      id: 4,
-      name: "Library",
-      description: "Books and learning materials for your daily routine.",
-      image:
-        "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='800'%3E%3Crect width='100%25' height='100%25' fill='%2366cdaa'/%3E%3Ctext x='50%25' y='50%25' font-size='350' text-anchor='middle' dominant-baseline='middle'%3E📚%3C/text%3E%3C/svg%3E",
-    },
-  ]);
+      const querySnapshot = await getDocs(collection(db, "products"));
+      console.log("تم الاتصال! عدد المنتجات:", querySnapshot.size);
 
-  React.useEffect(() => {
-    setCart(products.filter((item) => item.isAdded));
-  }, [products]);
-
-  function handleQuantity(productId, newQuantity) {
-    if (newQuantity < 1) return;
-
-    setProducts((prev) =>
-      prev.map((item) => {
-        if (item.id === productId) {
-          return {
-            ...item,
-            quantity: newQuantity,
-            totalPrice: item.newPrice * newQuantity,
-          };
-        }
-        return item;
-      }),
-    );
-  }
-
-  function toggleAddState(productId) {
-    setProducts((prev) =>
-      prev.map((pro) =>
-        pro.id == productId ? { ...pro, isAdded: !pro.isAdded } : pro,
-      ),
-    );
-  }
-
-  return (
-    <stateStore.Provider
-      value={{ products, cart, categories, handleQuantity, toggleAddState }}
-    >
-      {children}
-    </stateStore.Provider>
+      const productsList = [];
+      querySnapshot.forEach((doc) => {
+        productsList.push({ id: doc.id, ...doc.data() });
+      });
+      return productsList;
+    } catch (error) {
+      console.error("خطأ كارثي من فايربيز:", error);
+      throw error; // لرمي الخطأ للـ extraReducers
+    }
+  },
+);
+export const sendData = createAsyncThunk("products/send", async () => {
+  fetch();
+});
+export const fetchCats = createAsyncThunk("categories/fetchCats", async () => {
+  const querySnapshot = await getDocs(collection(db, "categories"));
+  const categoriesList = [];
+  querySnapshot.forEach((cat) =>
+    categoriesList.push({ id: cat.id, ...cat.data() }),
   );
-}
+  return categoriesList;
+});
+const productsSlice = createSlice({
+  name: "products",
+  initialState: { categories: [], items: [], loading: false },
+  reducers: {
+    toggleAddedState(state, action) {
+      state.items.map((item) => {
+        if (item.id === action.payload) {
+          item.isAdded = !item.isAdded;
+        }
+      });
+    },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchCats.fulfilled, (state, action) => {
+        state.categories = action.payload;
+      })
+      .addCase(fetchProducts.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(fetchProducts.rejected, (state, action) => {
+        console.log(action.error.message);
+        state.loading = false;
+      })
+      .addCase(fetchProducts.fulfilled, (state, action) => {
+        state.loading = false;
+        console.log(action.payload);
+        state.items = action.payload;
+      });
+  },
+});
+export const productsActions = productsSlice.actions;
+export const updateCart = createAsyncThunk("cart/updateCart", () => {
+  const cartItems = productsSlice.reducer.items.filter((item) => item.isAdded);
+  return cartItems;
+});
+
+const cart = createSlice({
+  name: "cart",
+  initialState: { items: [], totalItemsCount: 0 },
+  reducers: {
+    addToCart(state, action) {
+      const targetItem = action.payload;
+      const existingItem = state.items.find((item) => item.id == targetItem.id);
+
+      if (existingItem) {
+        existingItem.quantity += 1;
+      } else {
+        state.items.push({ ...action.payload, quantity: 1 });
+        state.totalItemsCount += 1;
+      }
+    },
+    removeFromCart(state, action) {
+      const targetItem = action.payload;
+      const existingItem = state.items.find(
+        (item) => item.id === targetItem.id,
+      );
+
+      if (existingItem.quantity >= 2) {
+        existingItem.quantity -= 1;
+      } else {
+        state.items = state.items.filter((item) => item.id !== existingItem.id);
+        state.totalItemsCount -= 1;
+      }
+    },
+    handleQuantity(state, action) {
+      const existingItem = state.items.find(
+        (item) => item.id == action.payload.id,
+      );
+      existingItem.quantity = action.payload.value;
+      state.items.map((item) => {
+        if (item.id == action.payload.id) {
+          item = existingItem;
+        }
+      });
+      console.log(action.payload.value);
+      console.log(action.payload.id);
+      console.log(existingItem);
+    },
+  },
+});
+export const cartActions = cart.actions;
+const store = configureStore({
+  reducer: { products: productsSlice.reducer, cart: cart.reducer },
+});
+export default store;

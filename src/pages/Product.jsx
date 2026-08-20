@@ -1,12 +1,12 @@
 import { useParams, NavLink } from "react-router";
-import { useContext } from "react";
-import { stateStore } from "../state-store/state-store";
+import { useSelector, useDispatch } from "react-redux";
+import { productsActions } from "../state-store/state-store";
 
 export default function ProductPage() {
-  const ss = useContext(stateStore);
   const { id } = useParams();
-
-  const product = ss.products.find((pro) => String(pro.id) === String(id));
+  const items = useSelector((state) => state.products.items);
+  const dispatch = useDispatch();
+  const product = items.find((pro) => pro.id == id);
 
   const quantity = product.quantity || 1;
   const totalPrice = product.totalPrice || product.newPrice * quantity;
@@ -35,7 +35,9 @@ export default function ProductPage() {
           {product.isAdded ? (
             <>
               <button
-                onClick={() => ss.toggleAddState(product.id)}
+                onClick={() =>
+                  dispatch(productsActions.toggleAddedState(product.id))
+                }
                 id={product.id}
               >
                 Remove From The Card
@@ -54,7 +56,11 @@ export default function ProductPage() {
               <div className="total">Total: {totalPrice}&#x24;</div>
             </>
           ) : product.isAvailable ? (
-            <button onClick={() => ss.toggleAddState(product.id)}>
+            <button
+              onClick={() =>
+                dispatch(productsActions.toggleAddedState(product.id))
+              }
+            >
               Add To The Card
             </button>
           ) : undefined}

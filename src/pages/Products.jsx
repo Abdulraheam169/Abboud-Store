@@ -1,5 +1,13 @@
 import React, { useContext } from "react";
 import { NavLink, useSearchParams } from "react-router";
+import { useEffect } from "react";
+import {
+  fetchProducts,
+  fetchCats,
+  cartActions,
+} from "../state-store/state-store";
+import { productsActions } from "../state-store/state-store";
+import { useDispatch, useSelector } from "react-redux";
 import {
   LuShoppingCart,
   LuTrash2,
@@ -7,10 +15,17 @@ import {
   LuDollarSign,
   LuRefreshCw,
 } from "react-icons/lu";
-import { stateStore } from "../state-store/state-store";
 
 export default function Products() {
-  const ss = useContext(stateStore);
+  const dispatch = useDispatch();
+  const { categories, items, loading } = useSelector((state) => state.products);
+  const cartItems = useSelector((state) => state.cart);
+
+  useEffect(() => {
+    dispatch(fetchProducts());
+    dispatch(fetchCats());
+  }, [dispatch]);
+
   const [searchParams, setSearchParams] = useSearchParams();
   function handleSearchParams(key, val) {
     const s = new URLSearchParams(searchParams);
@@ -59,7 +74,7 @@ export default function Products() {
     );
   }
   function createCategories() {
-    return ss.categories.map((category) => {
+    return categories.map((category) => {
       return (
         <button
           key={category.id}
@@ -78,10 +93,10 @@ export default function Products() {
       searchParams.get("category") === null &&
       searchParams.get("min-price") === null
     ) {
-      prods = ss.products;
+      prods = items;
     }
     if (searchParams.get("category") !== null) {
-      prods = ss.products.filter(
+      prods = items.filter(
         (pro) => pro.category === searchParams.get("category"),
       );
     }
@@ -146,14 +161,26 @@ export default function Products() {
             <LuTag />
             {product.category}
           </div>
-          {product.isAvailable ? (
-            <button
-              id={product.id}
-              onClick={() => ss.toggleAddState(product.id)}
-            >
-              {product.isAdded ? <LuTrash2 /> : <LuShoppingCart />}
-            </button>
-          ) : undefined}
+          <button
+            className="add-btn"
+            id={product.id}
+            onClick={() => {
+              dispatch(cartActions.addToCart(product));
+            }}
+          >
+            <LuShoppingCart />
+          </button>
+
+          <button
+            className="remove-btn"
+            id={product.id}
+            onClick={() => {
+              dispatch(cartActions.removeFromCart(product));
+            }}
+          >
+            <LuTrash2 />
+          </button>
+
           <NavLink id={product.id} to={`${product.id}`} className="det">
             Details
           </NavLink>
@@ -161,7 +188,7 @@ export default function Products() {
       );
     });
   }
-  return ss.products.length > 0 ? (
+  return items.length > 0 ? (
     <>
       <div className="search-bar">{createFilters()}</div>
       <div className="cat">
