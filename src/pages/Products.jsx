@@ -15,6 +15,7 @@ import {
   LuDollarSign,
   LuRefreshCw,
 } from "react-icons/lu";
+import toast, { Toaster } from "react-hot-toast";
 
 export default function Products() {
   const dispatch = useDispatch();
@@ -163,9 +164,11 @@ export default function Products() {
           </div>
           <button
             className="add-btn"
+            style={{ backgroundColor: "#009688" }}
             id={product.id}
             onClick={() => {
               dispatch(cartActions.addToCart(product));
+              toast.success("item Added");
             }}
           >
             <LuShoppingCart />
@@ -173,9 +176,15 @@ export default function Products() {
 
           <button
             className="remove-btn"
+            style={
+              cartItems.items.find((item) => item.id == product.id)
+                ? { backgroundColor: "#F44336" }
+                : { visibility: "hidden" }
+            }
             id={product.id}
             onClick={() => {
               dispatch(cartActions.removeFromCart(product));
+              toast.success("item removed");
             }}
           >
             <LuTrash2 />
@@ -200,6 +209,7 @@ export default function Products() {
         ) : null}
       </div>
       <div className="p-cont">{CreateProducts()}</div>
+      <Toaster position="bottom-center" reverseOrder={false} />
     </>
   ) : (
     <div className="loading"></div>

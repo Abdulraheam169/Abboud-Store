@@ -17,7 +17,10 @@ export default function About() {
         <li>address: Syria - Damascus</li>
         <li>
           Email:{" "}
-          <a href="mailto:abdulraheam.169@gmail.com">
+          <a
+            href="mailto:abdulraheam.169@gmail.com"
+            style={{ color: "#16d3c2" }}
+          >
             abdulraheam.169@gmail.com
           </a>
         </li>
@@ -33,6 +36,7 @@ export default function About() {
         <li>Java Script</li>
         <li>CSS</li>
         <li>React - React Router</li>
+        <li>Redux - Redux/toolkit</li>
         <li>git - github</li>
       </ul>
       <ul className="a-projects">

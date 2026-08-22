@@ -1,7 +1,8 @@
 import React, { lazy, Suspense } from "react";
 import { HashRouter, Routes, Route } from "react-router";
-import PageLayout from "./PageLayout";
 import { useDispatch, useSelector } from "react-redux";
+import { Toaster } from "react-hot-toast";
+import PageLayout from "./PageLayout";
 import { fetchProducts } from "./state-store/state-store.jsx";
 
 const Home = lazy(() => import("./pages/Home.jsx"));

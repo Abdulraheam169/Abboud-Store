@@ -2,15 +2,20 @@
   box-sizing: border-box;
   scroll-behavior: smooth;
 }
+html {
+  scroll-behavior: smooth;
+}
 :root {
   --main-background-color: #0d1b2e;
   --secondary-color: #ffffff;
   --button-color: #415a77;
-  --text-color: #0d1b2e;
+  /* --text-color: #0d1b2e; */
+  --text-color: #ffffff;
   --border-radius: 10px;
 }
 body {
-  background-color: #f8f9fa;
+  /* background-color: #607d8b45; */
+  background-image: linear-gradient(84deg, #1561c9c9, #000b19);
   margin: 0;
 }
 
@@ -41,12 +46,18 @@ nav {
   display: flex;
   justify-content: space-evenly;
   align-items: center;
-  background-color: var(--main-background-color);
+  /* background-color: var(--main-background-color); */
+  background-image: linear-gradient(
+    45deg,
+    var(--main-background-color),
+    #152582
+  );
   height: 50px;
   border-radius: var(--border-radius);
   position: sticky;
   top: 0;
   z-index: 1000;
+  box-shadow: 0px 4px 10px -6px #5098f9;
 
   a {
     color: var(--secondary-color);
@@ -130,7 +141,13 @@ nav {
 }
 
 .cat button {
-  background-color: #e0e1dd;
+  /* background-color: #e0e1dd; */
+  background-image: linear-gradient(
+    15deg,
+    var(--main-background-color),
+    #155fb4
+  );
+  color: white;
   border: none;
   border-radius: var(--border-radius);
   margin: 5px;
@@ -139,7 +156,7 @@ nav {
 }
 
 .search-bar {
-  background-color: var(--button-color);
+  background-color: #04328b;
   height: 50px;
   border-radius: var(--border-radius);
   width: 100%;
@@ -147,18 +164,20 @@ nav {
   display: flex;
   align-items: center;
   justify-content: center;
+  background-image: linear-gradient(15deg, black, transparent);
 
   #searchName,
   #max-price {
     border: none;
-    height: 30px;
   }
   #searchName {
     width: 400px;
+    background-color: transparent;
     border-radius: var(--border-radius);
     font-size: 15px;
   }
   #max-price {
+    height: 30px;
     color: var(--text-color);
     width: 100px;
     background-color: white;
@@ -227,28 +246,29 @@ nav {
   overflow: hidden;
   position: relative;
   margin: 5px;
-  width: 175px;
-  background-color: white;
-  box-shadow: -1px 0px 3px 0px #0d1b2e;
+  width: 220px;
+  background-color: var(--main-background-color);
+  box-shadow: 6px 1px 9px -3px #ffffff54;
   padding: 4px;
   border-radius: var(--border-radius);
   font-size: 13px;
   display: grid;
-  grid-template-columns: auto auto;
-  grid-template-rows: auto auto auto;
-  grid-template-areas: "img img" "title title" "pric cat" " remove-btn add-btn" "det det";
+  grid-template-columns: auto auto 1fr;
+  grid-template-rows: auto auto auto auto auto;
+  grid-template-areas: "img img add-btn" "img img remove-btn" "title title title" "title title title" "price price cat" "det det det";
   align-content: space-between;
   align-items: center;
   gap: 5px;
 
   .img {
     grid-area: img;
+    width: 160px;
     background-color: white;
     overflow: hidden;
     .p-img {
       order: 1;
       background-size: cover;
-      height: 175px;
+      height: 160px;
       transition: 0.5s;
       border-radius: var(--border-radius);
     }
@@ -258,10 +278,11 @@ nav {
     grid-area: title;
     font-size: 14px;
     font-weight: bold;
+    width: 90%;
   }
 
   .price {
-    grid-area: pric;
+    grid-area: price;
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -278,6 +299,7 @@ nav {
 
   .p-category {
     grid-area: cat;
+    margin-left: -20px;
   }
 
   .det {
@@ -296,7 +318,7 @@ nav {
     border-radius: var(--border-radius);
     background-color: #ffffff9e;
     width: 40px;
-    /* order: 5; */
+    margin: 4px;
     height: 35px;
     color: var(--text-color);
     border: 2px solid var(--main-background-color);

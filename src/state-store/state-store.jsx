@@ -7,6 +7,7 @@ import { collection, getDocs } from "firebase/firestore";
 import { db } from "../firebaseConfig";
 import { defaultSerializeQueryArgs } from "@reduxjs/toolkit/query";
 import { current } from "@reduxjs/toolkit";
+import toast, { Toaster } from "react-hot-toast";
 
 // export const fetchProducts = createAsyncThunk(
 //   "products/fetchProducts",
@@ -24,10 +25,7 @@ export const fetchProducts = createAsyncThunk(
   "products/fetchProducts",
   async () => {
     try {
-      console.log("جاري الاتصال بقاعدة البيانات...", db); // إذا طبع undefined فالمشكلة في ملف الكونفيغ
-
       const querySnapshot = await getDocs(collection(db, "products"));
-      console.log("تم الاتصال! عدد المنتجات:", querySnapshot.size);
 
       const productsList = [];
       querySnapshot.forEach((doc) => {
@@ -35,8 +33,8 @@ export const fetchProducts = createAsyncThunk(
       });
       return productsList;
     } catch (error) {
-      console.error("خطأ كارثي من فايربيز:", error);
-      throw error; // لرمي الخطأ للـ extraReducers
+      console.error("Error:", error);
+      throw error;
     }
   },
 );
@@ -117,18 +115,11 @@ const cart = createSlice({
       }
     },
     handleQuantity(state, action) {
-      const existingItem = state.items.find(
-        (item) => item.id == action.payload.id,
-      );
-      existingItem.quantity = action.payload.value;
-      state.items.map((item) => {
-        if (item.id == action.payload.id) {
-          item = existingItem;
-        }
-      });
-      console.log(action.payload.value);
-      console.log(action.payload.id);
-      console.log(existingItem);
+      const { id, value } = action.payload;
+      const existingItem = state.items.find((item) => item.id == id);
+      if (existingItem) {
+        existingItem.quantity = Math.max(1, value || 1);
+      }
     },
   },
 });
