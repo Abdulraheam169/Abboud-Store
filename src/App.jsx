@@ -7,7 +7,7 @@ import { fetchProducts } from "./state-store/state-store.jsx";
 
 const Home = lazy(() => import("./pages/Home.jsx"));
 const About = lazy(() => import("./pages/About.jsx"));
-const MyCard = lazy(() => import("./pages/MyCard.jsx"));
+const MyCart = lazy(() => import("./pages/MyCart.jsx"));
 const Products = lazy(() => import("./pages/Products.jsx"));
 const Product = lazy(() => import("./pages/Product.jsx"));
 const FormPage = lazy(() => import("./pages/FormPage.jsx"));
@@ -21,7 +21,7 @@ export default function Market() {
             <Route path="/" element={<PageLayout />}>
               <Route index element={<Home />} />
               <Route path="aboutUs" element={<About />} />
-              <Route path="myCard" element={<MyCard />} />
+              <Route path="myCart" element={<MyCart />} />
               <Route path="myCard/form" element={<FormPage />} />
               <Route path="products" element={<Products />} />
               <Route path="products/:id" element={<Product />} />

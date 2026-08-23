@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router";
 import { LuDollarSign, LuTrash } from "react-icons/lu";
 import { cartActions } from "../state-store/state-store";
-export default function MyCard() {
+export default function MyCart() {
   const cart = useSelector((state) => state.cart);
   const dispatch = useDispatch();
 
@@ -39,31 +39,42 @@ export default function MyCard() {
               <div className="c-title">{product.title}</div>
 
               <div className="c-price">{product.newPrice}</div>
+              {quantity > 1 && (
+                <button
+                  className="btn-1"
+                  onClick={() => {
+                    dispatch(
+                      cartActions.handleQuantity({
+                        id: product.id,
+                        value: quantity - 1,
+                      }),
+                    );
+                  }}
+                >
+                  -
+                </button>
+              )}
 
-              <input
-                onChange={(e) =>
+              <span className="c-quantity">{quantity}</span>
+              <button
+                className="btn-2"
+                onClick={() => {
                   dispatch(
                     cartActions.handleQuantity({
                       id: product.id,
-                      value: parseInt(e.target.value),
+                      value: quantity + 1,
                     }),
-                  )
-                }
-                value={quantity}
-                min={1}
-                type="number"
-                name="count"
-                className="c-quantity"
-              />
-
+                  );
+                }}
+              >
+                +
+              </button>
               <div className="c-total">{totalPrice}</div>
 
               <button
                 className="remo"
                 onClick={() => {
                   dispatch(cartActions.removeFromCart(product));
-                  console.log(product);
-                  console.log(cart.items);
                 }}
               >
                 <LuTrash />

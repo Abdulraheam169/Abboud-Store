@@ -9,18 +9,6 @@ import { defaultSerializeQueryArgs } from "@reduxjs/toolkit/query";
 import { current } from "@reduxjs/toolkit";
 import toast, { Toaster } from "react-hot-toast";
 
-// export const fetchProducts = createAsyncThunk(
-//   "products/fetchProducts",
-//   async () => {
-//     const querySnapshot = await getDocs(collection(db, "products"));
-//     console.log(querySnapshot.size);
-//     const productsList = [];
-//     querySnapshot.forEach((doc) => {
-//       productsList.push({ id: doc.id, ...doc.data() });
-//     });
-//     return productsList;
-//   },
-// );
 export const fetchProducts = createAsyncThunk(
   "products/fetchProducts",
   async () => {
@@ -33,7 +21,6 @@ export const fetchProducts = createAsyncThunk(
       });
       return productsList;
     } catch (error) {
-      console.error("Error:", error);
       throw error;
     }
   },
@@ -70,12 +57,10 @@ const productsSlice = createSlice({
         state.loading = true;
       })
       .addCase(fetchProducts.rejected, (state, action) => {
-        console.log(action.error.message);
         state.loading = false;
       })
       .addCase(fetchProducts.fulfilled, (state, action) => {
         state.loading = false;
-        console.log(action.payload);
         state.items = action.payload;
       });
   },
@@ -106,14 +91,10 @@ const cart = createSlice({
       const existingItem = state.items.find(
         (item) => item.id === targetItem.id,
       );
-
-      if (existingItem.quantity >= 2) {
-        existingItem.quantity -= 1;
-      } else {
-        state.items = state.items.filter((item) => item.id !== existingItem.id);
-        state.totalItemsCount -= 1;
-      }
+      state.items = state.items.filter((item) => item.id !== existingItem.id);
+      state.totalItemsCount -= 1;
     },
+
     handleQuantity(state, action) {
       const { id, value } = action.payload;
       const existingItem = state.items.find((item) => item.id == id);

@@ -18,7 +18,7 @@ export default function Header() {
         </NavLink>
         <NavLink
           className={({ isActive }) => (isActive ? "my-link" : undefined)}
-          to="myCard"
+          to="myCart"
         >
           My Cart
         </NavLink>
