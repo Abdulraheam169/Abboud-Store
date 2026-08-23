@@ -162,17 +162,19 @@ export default function Products() {
             <LuTag />
             {product.category}
           </div>
-          <button
-            className="add-btn"
-            style={{ backgroundColor: "#009688" }}
-            id={product.id}
-            onClick={() => {
-              dispatch(cartActions.addToCart(product));
-              toast.success("item Added");
-            }}
-          >
-            <LuShoppingCart />
-          </button>
+          {product.isAvailable && (
+            <button
+              className="add-btn"
+              style={{ backgroundColor: "#009688" }}
+              id={product.id}
+              onClick={() => {
+                dispatch(cartActions.addToCart(product));
+                toast.success("item Added");
+              }}
+            >
+              <LuShoppingCart />
+            </button>
+          )}
 
           <button
             className="remove-btn"
