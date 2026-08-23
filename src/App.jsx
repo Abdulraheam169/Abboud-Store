@@ -22,7 +22,7 @@ export default function Market() {
               <Route index element={<Home />} />
               <Route path="aboutUs" element={<About />} />
               <Route path="myCart" element={<MyCart />} />
-              <Route path="myCard/form" element={<FormPage />} />
+              <Route path="myCart/form" element={<FormPage />} />
               <Route path="products" element={<Products />} />
               <Route path="products/:id" element={<Product />} />
             </Route>
