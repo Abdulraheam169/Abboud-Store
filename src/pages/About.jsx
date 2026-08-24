@@ -5,6 +5,7 @@ import template from "/template.webp";
 import template2 from "/template-2.webp";
 import dice from "/dice.jpg";
 import toDoList from "/to-do-list-icon-vector.webp";
+import endGame from "/endGame.png";
 export default function About() {
   return (
     <div className="about-me">
@@ -42,12 +43,8 @@ export default function About() {
       <ul className="a-projects">
         <h3>Some Projects</h3>
         <li>
-          <a
-            target="_blank"
-            rel="noopener noreferrer"
-            href="https://abdulraheam169.github.io/Hangman-/"
-          >
-            <img src={hangman} alt="" />
+          <a target="_blank" href="https://abdulraheam169.github.io/Hangman-/">
+            <img src={hangman} alt="Hangman Game" />
             <span>Hangman Game</span>
           </a>
         </li>
@@ -55,37 +52,46 @@ export default function About() {
         <li>
           <a
             target="_blank"
-            rel="noopener noreferrer"
             href="https://abdulraheam169.github.io/html-css-template-1/"
           >
-            <img src={template} alt="" />
+            <img src={template} alt="Landing Page" />
             <span>HTML/CSS Template 1</span>
           </a>
         </li>
         <li>
           <a
             target="_blank"
-            rel="noopener noreferrer"
             href="https://abdulraheam169.github.io/html-css-Template-3/"
           >
-            <img src={template2} alt="" />
+            <img src={template2} alt="Landing Page" />
             <span>HTML/CSS Template 2</span>
           </a>
         </li>
 
         <li>
-          <a target="_blank" rel="noopener noreferrer" href="">
-            <img src={dice} alt="" />
+          <a
+            target="_blank"
+            rel="Dice Icon"
+            href="https://abdulraheam169.github.io/tenzies/"
+          >
+            <img src={dice} alt="Dice Game" />
+
             <span>Tenzies</span>
           </a>
         </li>
         <li>
           <a
             target="_blank"
-            rel="noopener noreferrer"
-            href="https://abdulraheam169.github.io/ToDo-List/"
+            rel="End Game"
+            href="https://abdulraheam169.github.io/End-Game/"
           >
-            <img src={toDoList} alt="" />
+            <img src={endGame} alt="End Game Icon" />
+            <span>End Game</span>
+          </a>
+        </li>
+        <li>
+          <a target="_blank" href="https://abdulraheam169.github.io/ToDo-List/">
+            <img src={toDoList} alt="ToDo List" />
             <span>ToDo List</span>
           </a>
         </li>
